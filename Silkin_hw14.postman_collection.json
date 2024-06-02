@@ -1,0 +1,2391 @@
+{
+	"info": {
+		"_postman_id": "a066ee43-1c0c-450b-a9b7-cc1b0617d16d",
+		"name": "Silkin_hw14",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26908883"
+	},
+	"item": [
+		{
+			"name": "User Creation and Validation",
+			"item": [
+				{
+					"name": "Create user with empty name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with an empty name. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"\\\"name\\\" is not allowed to be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповідь з помилкою\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with empty name (mock server)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповідь з помилкою\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://9320746e-8cde-4705-b19d-47f5d356d733.mock.pstmn.io/auth/signup",
+							"protocol": "https",
+							"host": [
+								"9320746e-8cde-4705-b19d-47f5d356d733",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create user with empty name (mock server)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://9320746e-8cde-4705-b19d-47f5d356d733.mock.pstmn.io/auth/signup",
+									"protocol": "https",
+									"host": [
+										"9320746e-8cde-4705-b19d-47f5d356d733",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"status\": \"помилка\",\r\n    \"message\": \"ім*я не може бути пустим\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Create user with invalid name (wrong data)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with invalid name. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Name is invalid\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"1112334 4554\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with invalid name (wrong length)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with invalid name (less than 2 or more than 20 characters). Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Name has to be from 2 to 20 characters long\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді з помилкою\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"y\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with empty last name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with an empty lastname. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"\\\"lastName\\\" is not allowed to be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": \"\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with invalid last name (wrong data)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with invalid last name. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Last Name is invalid\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": false,\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with invalid last name (wrong length)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with invalid last name (less than 2 or more than 20 characters). Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Last Name has to be from 2 to 20 characters long\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": \"test test test test test test test test test test test test test test test\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with empty email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with an empty email. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"\\\"email\\\" is not allowed to be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with invalid email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with invalid email. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Email is incorrect\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"test.com\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user without password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created without password. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"\\\"password\\\" is not allowed to be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"\",\r\n  \"repeatPassword\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with invalid password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with invalid password. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"12345\",\r\n  \"repeatPassword\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user without re-entered password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created without re-entered password. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"\\\"repeatPassword\\\" is not allowed to be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with non matching passwords",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"User can not be created with non matching passwords. Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check error message\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Passwords do not match\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check status\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"error\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().message).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const errorSchema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді\r",
+									"pm.test(\"Check Error JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, errorSchema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"12345YYYtest\",\r\n  \"repeatPassword\": \"12345YYYaaaa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Happy pass",
+			"item": [
+				{
+					"name": "Create user with valid data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// тест на відповідність json схемі\r",
+									"const schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"userId\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"photoFilename\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"distanceUnits\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"currency\": {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"userId\",\r",
+									"        \"photoFilename\",\r",
+									"        \"distanceUnits\",\r",
+									"        \"currency\"\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"data\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Check JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});\r",
+									"\r",
+									"// cетимо змінну userId\r",
+									"pm.collectionVariables.set(\"userId\", jsonData.data.userId);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response is an object\", function() {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 1300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(13000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status is ok\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check id data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.userId).to.eql('number');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check photoFilename data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.photoFilename).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check distanceUnits data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.distanceUnits).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check currency data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.currency).to.eql('string');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// сетимо рандомний імейл в змінну\r",
+									"var email = pm.variables.replaceIn('{{$randomEmail}}');\r",
+									"pm.collectionVariables.set(\"email\", email);\r",
+									"\r",
+									"// генеруємо рандомний пароль\r",
+									"function generatePassword(length) {\r",
+									"    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+									"    let password = '';\r",
+									"    for (let i = 0; i < length; i++) {\r",
+									"        password += characters.charAt(Math.floor(Math.random() * characters.length));\r",
+									"    }\r",
+									"    return password;\r",
+									"}\r",
+									"// генеруємо пароль, доки він не відповідає вимогам\r",
+									"let password;\r",
+									"do {\r",
+									"    password = generatePassword(Math.floor(Math.random() * 8) + 8);\r",
+									"} while (!(/[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password) && password.length >= 8 && password.length <= 15));\r",
+									"// зберігаємо пароль у змінну колекції\r",
+									"pm.collectionVariables.set(\"password\", password);\r",
+									"\r",
+									"// сетимо рандомне прізвище\r",
+									"var lastName;\r",
+									"do {\r",
+									"    lastName = pm.variables.replaceIn('{{$randomLastName}}');\r",
+									"} while (lastName.length < 2 || lastName.length > 20);\r",
+									"pm.collectionVariables.set(\"lastName\", lastName);\r",
+									"\r",
+									"// сетимо рандомне ім*я\r",
+									"var firstName;\r",
+									"do {\r",
+									"    firstName = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+									"} while (firstName.length < 2 || firstName.length > 20);\r",
+									"pm.collectionVariables.set(\"firstName\", firstName);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get created user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response is an object\", function() {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status is ok\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check id data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.userId).to.eql('number');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check photoFilename data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.photoFilename).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check name data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.name).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check lastName data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.lastName).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// JSON-схема для відповіді\r",
+									"const schemaGet = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"userId\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"photoFilename\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"lastName\": {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"userId\",\r",
+									"        \"photoFilename\",\r",
+									"        \"name\",\r",
+									"        \"lastName\"\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"data\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"// Тест для перевірки відповіді за визначеною JSON-схемою\r",
+									"pm.test(\"Check JSON-SchemaGet\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, schemaGet)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Photo in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.photoFilename).to.eql(pm.collectionVariables.get(\"imageUrl\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First name in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.name).to.eql(pm.collectionVariables.get(\"updatedFirstName\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Last name in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.lastName).to.eql(pm.collectionVariables.get(\"updatedLastName\"));\r",
+									"});\r",
+									"\r",
+									"// перевіряємо чи дата народження в респонсі дорівнює вказаний даті враховуючи різні формати \r",
+									"const dateString = pm.response.json().data.dateBirth;\r",
+									"const dateResp = new Date(dateString);\r",
+									"const dateBirthString = pm.collectionVariables.get(\"dateBirth\");\r",
+									"const dateBirth = new Date(dateBirthString);\r",
+									"pm.test(\"Date Birth in response is correct\", function() {\r",
+									"    pm.expect(dateResp.getTime()).to.eql(dateBirth.getTime());\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is an object\", function() {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status is ok\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check dateBirth data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.dateBirth).to.eql('string');\r",
+									"});    \r",
+									"\r",
+									"// перевіряємо відповдність встановлній json схемі\r",
+									"const schemaUpd = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\",\r",
+									"      \"enum\": [\"ok\"]\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"userId\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"photoFilename\": {\r",
+									"          \"type\": \"string\",\r",
+									"          \"format\": \"uri\"\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"lastName\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"dateBirth\": {\r",
+									"          \"type\": \"string\",\r",
+									"          \"format\": \"date-time\"\r",
+									"        },\r",
+									"        \"country\": {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"userId\",\r",
+									"        \"photoFilename\",\r",
+									"        \"name\",\r",
+									"        \"lastName\",\r",
+									"        \"dateBirth\"    \r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"status\", \"data\"]\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Check JSON-SchemaUpd\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, schemaUpd)).to.be.true;\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// додаємо рандомну URL фото\r",
+									"var imageUrl = pm.variables.replaceIn('{{$randomAvatarImage}}');\r",
+									"pm.collectionVariables.set(\"imageUrl\", imageUrl);\r",
+									"\r",
+									"// додаємо рандомне прізвище\r",
+									"var updatedLastName;\r",
+									"do {\r",
+									"    updatedLastName = pm.variables.replaceIn('{{$randomLastName}}');\r",
+									"} while (updatedLastName.length < 2 || updatedLastName.length > 20);\r",
+									"pm.collectionVariables.set(\"updatedLastName\", updatedLastName);\r",
+									"\r",
+									"// додаємо рандомне прізвище\r",
+									"var updatedFirstName;\r",
+									"do {\r",
+									"    updatedFirstName = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+									"} while (updatedFirstName.length < 2 || updatedFirstName.length > 20);\r",
+									"pm.collectionVariables.set(\"updatedFirstName\", updatedFirstName);\r",
+									"\r",
+									"// додаємо рандомну країну\r",
+									"var country = pm.variables.replaceIn('{{$randomCountry}}');\r",
+									"pm.collectionVariables.set(\"country\", country);\r",
+									"\r",
+									"// додаємомо рандомну дата народження\r",
+									"var dateBirth = pm.variables.replaceIn('{{$randomDatePast}}');\r",
+									"pm.collectionVariables.set(\"dateBirth\", dateBirth);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"photoFilename\": \"{{imageUrl}}\",\r\n  \"name\": \"{{updatedFirstName}}\",\r\n  \"lastName\": \"{{updatedLastName}}\",\r\n  \"dateBirth\": \"{{dateBirth}}\",\r\n  \"country\": \"{{country}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"UserID matches userID by creation\", function () {\r",
+									"    pm.expect(jsonData.data.userId).to.eql(pm.collectionVariables.get(\"userId\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is an object\", function() {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 1800ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1800);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status is ok\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");\r",
+									"});\r",
+									"\r",
+									"// перевіряємо відповідь на відповідність json схемі\r",
+									"const schemaChangePass = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\",\r",
+									"      \"enum\": [\"ok\"]\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"userId\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\"userId\"]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"status\", \"data\"]\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Check JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, schemaChangePass)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// додаємо рандомний новий пароль\r",
+									"var newPassword = pm.variables.replaceIn('{{$randomPassword}}');\r",
+									"pm.collectionVariables.set(\"newPassword\", newPassword);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"oldPassword\": \"{{password}}\",\r\n  \"password\": \"{{newPassword}}\",\r\n  \"repeatPassword\": \"{{newPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response is an object\", function() {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status is ok\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");\r",
+									"});\r",
+									"\r",
+									"// перевіряємо на відповідність json схемі\r",
+									"const schemaLogout = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\",\r",
+									"      \"enum\": [\"ok\"]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"status\"]\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Check JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, schemaLogout)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"UserID matches userID by creation\", function () {\r",
+									"    pm.expect(jsonData.data.userId).to.eql(pm.collectionVariables.get(\"userId\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is an object\", function() {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 1300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(13000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status is ok\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check id data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.userId).to.eql('number');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check distanceUnits data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.distanceUnits).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check currency data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.currency).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// перевіряємо правильність адреси електронної пошти\r",
+									"const email = pm.collectionVariables.get(\"email\");\r",
+									"function isEmailValid(email) {\r",
+									"    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\r",
+									"    return emailRegex.test(email);\r",
+									"}\r",
+									"pm.test(\"Email is valid\", function () {\r",
+									"    pm.expect(isEmailValid(email)).to.be.true;\r",
+									"});\r",
+									"\r",
+									"// перевіряємо на відповідність json схемі\r",
+									"const schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"userId\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"photoFilename\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"distanceUnits\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"currency\": {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"userId\",\r",
+									"        \"photoFilename\",\r",
+									"        \"distanceUnits\",\r",
+									"        \"currency\"\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"data\"\r",
+									"  ]\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Check JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{newPassword}}\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a car",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set(\"car_id\", jsonData.data.id);\r",
+									"pm.collectionVariables.set(\"car_CreatedAt\", jsonData.data.carCreatedAt);\r",
+									"\r",
+									"pm.test(\"carBrandId in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.carBrandId).to.eql(pm.collectionVariables.get(\"carBrandId\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"carModelId in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.carModelId).to.eql(pm.collectionVariables.get(\"carModelId\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"mileage in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.initialMileage).to.eql(pm.collectionVariables.get(\"mileage\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"car_id in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.id).to.eql(pm.collectionVariables.get(\"car_id\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is an object\", function() {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status is ok\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check CarID data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.id).to.eql('number');\r",
+									"});    \r",
+									"\r",
+									"pm.test(\"Check brand data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.brand).to.eql('string');\r",
+									"}); \r",
+									"\r",
+									"pm.test(\"Check model data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.model).to.eql('string');\r",
+									"}); \r",
+									"\r",
+									"pm.test(\"Check logo data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.logo).to.eql('string');\r",
+									"}); \r",
+									"\r",
+									"// Перевіряємо на відповідність json схемі\r",
+									"const schemaAddCar = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\",\r",
+									"      \"enum\": [\"ok\"]\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"id\": { \"type\": \"integer\" },\r",
+									"        \"carBrandId\": { \"type\": \"integer\" },\r",
+									"        \"carModelId\": { \"type\": \"integer\" },\r",
+									"        \"initialMileage\": { \"type\": \"integer\" },\r",
+									"        \"updatedMileageAt\": { \"type\": \"string\", \"format\": \"date-time\" },\r",
+									"        \"carCreatedAt\": { \"type\": \"string\", \"format\": \"date-time\" },\r",
+									"        \"mileage\": { \"type\": \"integer\" },\r",
+									"        \"brand\": { \"type\": \"string\" },\r",
+									"        \"model\": { \"type\": \"string\" },\r",
+									"        \"logo\": { \"type\": \"string\" }\r",
+									"      },\r",
+									"      \"required\": [\"id\", \"carBrandId\", \"carModelId\", \"initialMileage\", \"updatedMileageAt\", \"carCreatedAt\", \"mileage\", \"brand\", \"model\", \"logo\"]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"status\", \"data\"]\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Check JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, schemaAddCar)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// враховуючи бренди, додаємо варіанти моделей і сетимо рандомну змінну з наявних значень\r",
+									"const carModels = {\r",
+									"    1: [1, 2, 3, 4, 5],\r",
+									"    2: [6, 7, 8, 9, 10],\r",
+									"    3: [11, 12, 13, 14, 15],\r",
+									"    4: [16, 17, 18],\r",
+									"    5: [19, 20, 21, 22, 23]\r",
+									"};\r",
+									"\r",
+									"const carBrandIdList = [1, 2, 3, 4, 5];\r",
+									"const randomCarBrandIndex = Math.floor(Math.random() * carBrandIdList.length);\r",
+									"const carBrandId = carBrandIdList[randomCarBrandIndex];\r",
+									"\r",
+									"pm.collectionVariables.set(\"carBrandId\", carBrandId);\r",
+									"\r",
+									"const carModelIdList = carModels[carBrandId];\r",
+									"const randomCarModelIndex = Math.floor(Math.random() * carModelIdList.length);\r",
+									"const carModelId = carModelIdList[randomCarModelIndex];\r",
+									"\r",
+									"pm.collectionVariables.set(\"carModelId\", carModelId);\r",
+									"\r",
+									"// генеруємо випадкове число від 0 до 999999 для mileage\r",
+									"const mileage = Math.floor(Math.random() * 1000000);\r",
+									"pm.collectionVariables.set(\"mileage\", mileage);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"carBrandId\": {{carBrandId}},\r\n  \"carModelId\": {{carModelId}},\r\n  \"mileage\": {{mileage}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/cars",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add expanses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response is an object\", function() {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status is ok\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"totalCost in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.totalCost).to.eql(pm.collectionVariables.get(\"totalCost\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"liters in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.liters).to.eql(pm.collectionVariables.get(\"liters\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"newMileage in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.mileage).to.eql(pm.collectionVariables.get(\"newMileage\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"car_id in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.carId).to.eql(pm.collectionVariables.get(\"car_id\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"reportedAt in response is correct\", function () {\r",
+									"    pm.expect(jsonData.data.reportedAt).to.eql(pm.collectionVariables.get(\"car_CreatedAt\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check id data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.id).to.eql('number');\r",
+									"}); \r",
+									"\r",
+									"pm.test(\"Check reportedAt data type\", function () {\r",
+									"    pm.expect(typeof pm.response.json().data.reportedAt).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"// перевіряємо на відповідність json схемі\r",
+									"const schemaAddExpanses = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\",\r",
+									"      \"enum\": [\"ok\"]\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"carId\": { \"type\": \"integer\" },\r",
+									"        \"reportedAt\": { \"type\": \"string\", \"format\": \"date-time\" },\r",
+									"        \"liters\": { \"type\": \"number\" },\r",
+									"        \"id\": { \"type\": \"integer\" },\r",
+									"        \"mileage\": { \"type\": \"integer\" },\r",
+									"        \"totalCost\": { \"type\": \"number\" }\r",
+									"      },\r",
+									"      \"required\": [\"carId\", \"reportedAt\", \"liters\", \"id\", \"mileage\", \"totalCost\"]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"status\", \"data\"]\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Check JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, schemaAddExpanses)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// додаємо нове значення для Mileage, яке буде більше за попереднє встановлене\r",
+									"if (pm.collectionVariables.has(\"mileage\")) {\r",
+									"    const mileage = pm.collectionVariables.get(\"mileage\");\r",
+									"    let newMileage;\r",
+									"    do {\r",
+									"        newMileage = Math.floor(Math.random() * (1000000 - mileage)) + mileage + 1;\r",
+									"    } while (newMileage <= mileage);\r",
+									"    pm.collectionVariables.set(\"newMileage\", newMileage);\r",
+									"} \r",
+									"\r",
+									"// Генеруємо і додаємо значення для totalCost\r",
+									"const randomFractionCost = Math.random() * (1 - 0.01) + 0.01;\r",
+									"const totalCost = randomFractionCost * 1000000;\r",
+									"const roundedtotalCost = parseFloat(totalCost.toFixed(2));\r",
+									"pm.collectionVariables.set(\"totalCost\", roundedtotalCost);\r",
+									"\r",
+									"// Генеруємо і додаємо значення для liters\r",
+									"const randomFractionLiters = Math.random();\r",
+									"const liters = randomFractionLiters * 9998.99 + 0.01;\r",
+									"const roundedLiters = parseFloat(liters.toFixed(2));\r",
+									"pm.collectionVariables.set(\"liters\", roundedLiters);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"carId\": {{car_id}},\r\n  \"reportedAt\": \"{{car_CreatedAt}}\",\r\n  \"mileage\": {{newMileage}},\r\n  \"liters\": {{liters}},\r\n  \"totalCost\": {{totalCost}},\r\n  \"forceMileage\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/expenses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"expenses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response is an object\", function() {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status is ok\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");\r",
+									"});\r",
+									"\r",
+									"// перевіряємо на відповідність json схемі\r",
+									"const schemaDelete = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"string\",\r",
+									"      \"enum\": [\"ok\"]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"status\"]\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Check JSON-Schema\", function() {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(tv4.validate(jsonData, schemaDelete)).to.be.true;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// clear variables:\r",
+									"pm.collectionVariables.unset(\"firstName\");\r",
+									"pm.collectionVariables.unset(\"updatedFirstName\");\r",
+									"pm.collectionVariables.unset(\"lastName\");\r",
+									"pm.collectionVariables.unset(\"updatedLastName\");\r",
+									"pm.collectionVariables.unset(\"dateBirth\");\r",
+									"pm.collectionVariables.unset(\"country\");\r",
+									"pm.collectionVariables.unset(\"totalCost\");\r",
+									"pm.collectionVariables.unset(\"carModelId\");\r",
+									"pm.collectionVariables.unset(\"carBrandId\");\r",
+									"pm.collectionVariables.unset(\"car_id\");\r",
+									"pm.collectionVariables.unset(\"car_CreatedAt\");\r",
+									"pm.collectionVariables.unset(\"newMileage\");\r",
+									"pm.collectionVariables.unset(\"newPassword\");\r",
+									"pm.collectionVariables.unset(\"password\");\r",
+									"pm.collectionVariables.unset(\"mileage\");\r",
+									"pm.collectionVariables.unset(\"liters\");\r",
+									"pm.collectionVariables.unset(\"imageUrl\");\r",
+									"pm.collectionVariables.unset(\"userId\");\r",
+									"pm.collectionVariables.unset(\"carModelId\");\r",
+									"pm.collectionVariables.unset(\"email\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
